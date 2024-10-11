@@ -21,13 +21,546 @@
     
     <main>
         <section>
-            <h2>Who I Am</h2>
+            <h2><meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <title>Custom Shirt Upload &amp; Download</title>
+                <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&amp;family=Lobster&amp;family=Montserrat:wght@400;700&amp;family=Pacifico&amp;family=Raleway:wght@400;700&amp;family=Open+Sans:wght@400;700&amp;family=Quicksand:wght@400;700&amp;family=Bangers&amp;family=Sacramento&amp;family=Indie+Flower&amp;family=Amatic+SC:wght@700&amp;family=Permanent+Marker&amp;family=Shadows+Into+Light&amp;family=Great+Vibes&amp;family=Press+Start+2P&amp;family=Fredericka+the+Great&amp;family=Rock+Salt&amp;family=Creepster&amp;family=Comic+Neue&amp;family=Gloria+Hallelujah&amp;family=Righteous&amp;family=Luckiest+Guy&amp;family=Black+Ops+One&amp;family=Boogaloo&amp;family=VT323&amp;display=swap" rel="stylesheet">
+                <style>
+                    body {
+                        font-family: Arial, sans-serif;
+                        padding: 20px;
+                        margin: 0;
+                        overflow: auto;
+                    }
+                
+                    .container {
+                        display: flex;
+                        justify-content: space-between;
+                        flex-wrap: wrap;
+                        max-width: 1200px;
+                        margin: 0 auto;
+                    }
+                
+                    .shirt-preview {
+                        position: relative;
+                        width: 100%;
+                        max-width: 500px;
+                        height: 500px;
+                        border: 1px solid #ddd;
+                        background-color: #f9f9f9;
+                        user-select: none;
+                        margin-bottom: 20px;
+                        overflow: hidden;
+                    }
+                
+                    .shirt-template {
+                        width: 100%;
+                        height: 100%;
+                        object-fit: cover;
+                        display: block;
+                    }
+                
+                    .uploadedImage {
+                        position: absolute;
+                        top: 50%;
+                        left: 50%;
+                        width: auto;
+                        height: auto;
+                        max-width: 100%;
+                        max-height: 100%;
+                        transform: translate(-50%, -50%);
+                        opacity: 0.9;
+                        cursor: move;
+                        transition: transform 0.1s ease;
+                    }
+                
+                    .controls {
+                        display: flex;
+                        flex-direction: column;
+                        max-width: 300px;
+                        flex: 1;
+                        margin-left: 20px;
+                    }
+                
+                    input[type="file"] {
+                        margin-top: 20px;
+                        padding: 10px;
+                        font-size: 16px;
+                    }
+                
+                    .slider-label {
+                        font-size: 14px;
+                        margin-right: 10px;
+                    }
+                
+                    .slider {
+                        width: 100%;
+                        margin-bottom: 20px;
+                    }
+                
+                    button {
+                        padding: 10px 20px;
+                        font-size: 16px;
+                        background-color: #28a745;
+                        color: white;
+                        border: none;
+                        cursor: pointer;
+                        margin-bottom: 10px;
+                    }
+                
+                    #remove-btn {
+                        background-color: #dc3545;
+                    }
+                
+                    #text-input {
+                        padding: 10px;
+                        font-size: 16px;
+                        margin-bottom: 10px;
+                    }
+                
+                    #font-style-dropdown {
+                        margin-top: 10px;
+                        font-size: 16px;
+                        display: flex;
+                        flex-wrap: wrap;
+                        gap: 5px;
+                    }
+                
+                    .draggable-text {
+                        position: absolute;
+                        cursor: move;
+                    }
+                
+                    @media (max-width: 768px) {
+                        .container {
+                            flex-direction: column;
+                            align-items: center;
+                        }
+                
+                        .controls {
+                            margin-left: 0;
+                            width: 100%;
+                            max-width: none;
+                        }
+                
+                        .shirt-preview {
+                            max-width: 100%;
+                        }
+                
+                        input[type="file"],
+                        .slider,
+                        button {
+                            font-size: 14px;
+                            padding: 8px;
+                        }
+                    }
+                
+                    /* Button styles for front and back */
+                    .side-buttons {
+                        display: flex;
+                        justify-content: center;
+                        margin-bottom: 10px;
+                    }
+                
+                    .side-buttons button {
+                        margin: 0 5px;
+                        background-color: #007bff;
+                    }
+                </style>
+                
+                <h1>Upload and Customize Your Design</h1>
+                
+                <div class="side-buttons">
+                    <button onclick="showFront()">Front</button>
+                    <button onclick="showBack()">Back</button>
+                </div>
+                
+                <div class="container">
+                    <div class="shirt-preview" id="shirtPreview">
+                        <img src="https://craftmyprints.odoo.com/web/image/864-a414b308/dae0ffb6-8eee-406c-86b4-874899f37843-removebg-preview.webp" alt="Shirt Template" class="shirt-template" id="shirtTemplate" loading="lazy">
+                    </div>
+                
+                    <div class="controls">
+                        <input type="file" accept="image/*" onchange="previewImage(event)" id="imageInput">
+                
+                        <div>
+                            <label for="sizeControl" class="slider-label">Resize Image:</label>
+                            <input type="range" id="sizeControl" class="slider" min="50" max="300" value="200" onchange="resizeImage()">
+                        </div>
+                
+                        <div>
+                            <label for="rotateImageControl" class="slider-label">Rotate Image:</label>
+                            <input type="range" id="rotateImageControl" class="slider" min="0" max="360" value="0" onchange="rotateImage()">
+                        </div>
+                
+                        <div>
+                            <label for="rotateTextControl" class="slider-label">Rotate Text:</label>
+                            <input type="range" id="rotateTextControl" class="slider" min="0" max="360" value="0" onchange="rotateText()">
+                        </div>
+                
+                        <button id="remove-btn" onclick="removeImage()">Remove Image</button>
+                
+                        <input type="text" id="text-input" placeholder="Enter text here" oninput="updateText()">
+                        
+                        <button id="remove-text-btn" onclick="removeText()">Remove Text</button>
+                
+                        <select id="font-style-dropdown" onchange="selectFont(this.value)">
+                            <option value="Lobster" style="font-family: 'Lobster';">Lobster</option>
+                        </select>
+                
+                        <div>
+                            <label for="textSizeControl" class="slider-label">Text Size:</label>
+                            <input type="range" id="textSizeControl" class="slider" min="10" max="110" value="32" onchange="updateText()">
+                        </div>
+                
+                        <input type="color" id="text-color" value="#000000" onchange="changeTextColor()">
+                
+                        <button id="download-btn" onclick="downloadFinalImage()">Download Final Image</button>
+                
+                        <!-- Add New Text Box Button -->
+                        <button onclick="addTextBox()">Add New Text Box</button>
+                    </div>
+                </div>
+                
+                <canvas id="finalCanvas" width="300" height="400" style="display: none;"></canvas>
+                
+                <script>
+                    const canvas = document.getElementById('finalCanvas');
+                    const ctx = canvas.getContext('2d');
+                    const shirtPreview = document.getElementById('shirtPreview');
+                    let imgX = 50;
+                    let imgY = 50;
+                    let imgWidth = 200;
+                    let imgRotation = 0;
+                    let scale = 1;
+                
+                    let isDraggingText = false;
+                    let startTextX, startTextY;
+                
+                    let isDraggingImage = false;
+                    let startImageX, startImageY;
+                
+                    let uploadedImages = [];
+                    let selectedImage = null; // Keeps track of the selected image for resizing and rotating
+                    let imageCount = 0;
+                
+                    const frontShirtImage = "https://craftmyprints.odoo.com/web/image/864-a414b308/dae0ffb6-8eee-406c-86b4-874899f37843-removebg-preview.webp";
+                    const backShirtImage = "https://craftmyprints.odoo.com/web/image/866-cbd77099/d48108e1-91d7-47f9-867b-52ffc8a8eaf5-removebg-preview.webp";
+                
+                    let frontDesign = {
+                        images: [],
+                        text: "",
+                        fontSize: 32,
+                        fontFamily: "Lobster",
+                        color: "#000000",
+                        textX: 50,
+                        textY: 350,
+                        textRotation: 0
+                    };
+                
+                    let backDesign = {
+                        images: [],
+                        text: "",
+                        fontSize: 32,
+                        fontFamily: "Lobster",
+                        color: "#000000",
+                        textX: 50,
+                        textY: 350,
+                        textRotation: 0
+                    };
+                
+                    let currentDesign = frontDesign;
+                
+                    function previewImage(event) {
+                        const imageInput = document.getElementById('imageInput');
+                        if (uploadedImages.length > 0) {
+                            alert('You can only upload one image.');
+                            return;
+                        }
+                
+                        const files = event.target.files;
+                        if (files.length > 0) {
+                            const reader = new FileReader();
+                
+                            reader.onload = function () {
+                                const imgElement = document.createElement('img');
+                                imgElement.src = reader.result;
+                                imgElement.classList.add('uploadedImage');
+                                imgElement.style.transform = 'translate(0px, 0px)';
+                                shirtPreview.appendChild(imgElement);
+                
+                                initImageDrag(imgElement);
+                                uploadedImages.push(imgElement);
+                                currentDesign.images.push(imgElement);
+                            };
+                
+                            reader.readAsDataURL(files[0]);
+                        }
+                        imageInput.disabled = true;
+                    }
+                
+                    function initImageDrag(image) {
+                        if (!image.imgX) image.imgX = 0;
+                        if (!image.imgY) image.imgY = 0;
+                
+                        function startDrag(event) {
+                            isDraggingImage = true;
+                            selectedImage = image;
+                            const evt = event.touches ? event.touches[0] : event;
+                            startImageX = evt.clientX - image.imgX;
+                            startImageY = evt.clientY - image.imgY;
+                            image.style.cursor = 'grabbing';
+                            event.preventDefault();
+                        }
+                
+                        function moveDrag(event) {
+                            if (isDraggingImage && selectedImage === image) {
+                                const evt = event.touches ? event.touches[0] : event;
+                                image.imgX = evt.clientX - startImageX;
+                                image.imgY = evt.clientY - startImageY;
+                                image.style.transform = `translate(${image.imgX}px, ${image.imgY}px) rotate(${imgRotation}deg)`;
+                                event.preventDefault();
+                            }
+                        }
+                
+                        function endDrag() {
+                            isDraggingImage = false;
+                            image.style.cursor = 'move';
+                        }
+                
+                        image.onmousedown = startDrag;
+                        image.ontouchstart = startDrag;
+                        document.onmousemove = moveDrag;
+                        document.ontouchmove = moveDrag;
+                        document.onmouseup = endDrag;
+                        document.ontouchend = endDrag;
+                    }
+                
+                    function resizeImage() {
+                        if (selectedImage) {
+                            const sizeControl = document.getElementById('sizeControl');
+                            const size = sizeControl.value;
+                            imgWidth = size;
+                            selectedImage.style.width = imgWidth + 'px';
+                            selectedImage.style.height = imgWidth + 'px';
+                        }
+                    }
+                
+                    function rotateImage() {
+                        if (selectedImage) {
+                            const rotateControl = document.getElementById('rotateImageControl');
+                            imgRotation = rotateControl.value;
+                            selectedImage.style.transform = `translate(${imgX}px, ${imgY}px) rotate(${imgRotation}deg)`;
+                        }
+                    }
+                
+                    function clearDesign() {
+                        shirtPreview.querySelectorAll('.uploadedImage').forEach(img => img.remove());
+                        shirtPreview.querySelectorAll('.draggable-text').forEach(div => div.remove());
+                        uploadedImages = [];
+                        selectedImage = null;
+                    }
+                
+                    function showFront() {
+                        clearDesign();
+                        currentDesign = frontDesign;
+                        document.getElementById('shirtTemplate').src = frontShirtImage;
+                        loadDesign(currentDesign);
+                    }
+                
+                    function showBack() {
+                        clearDesign();
+                        currentDesign = backDesign;
+                        document.getElementById('shirtTemplate').src = backShirtImage;
+                        loadDesign(currentDesign);
+                    }
+                
+                    function loadDesign(design) {
+                        design.images.forEach(img => {
+                            shirtPreview.appendChild(img);
+                            uploadedImages.push(img);
+                        });
+                
+                        const textInput = document.getElementById('text-input');
+                        textInput.value = design.text;
+                        document.getElementById('textSizeControl').value = design.fontSize;
+                        document.getElementById('font-style-dropdown').value = design.fontFamily;
+                        document.getElementById('text-color').value = design.color;
+                
+                        updateText();
+                    }
+                
+                    function removeImage() {
+                        uploadedImages.forEach(img => img.remove());
+                        uploadedImages = [];
+                        currentDesign.images = [];
+                        document.getElementById('imageInput').disabled = false;
+                    }
+                
+                    function removeText() {
+                        const textDiv = shirtPreview.querySelector('.draggable-text');
+                        if (textDiv) {
+                            textDiv.remove();
+                        }
+                        document.getElementById('text-input').value = '';
+                        currentDesign.text = '';
+                    }
+                
+                    let textColor = '#000000';
+                
+                    function changeTextColor() {
+                        const textColorInput = document.getElementById('text-color');
+                        textColor = textColorInput.value;
+                        updateText();
+                    }
+                
+                    function updateText() {
+                        const textInput = document.getElementById('text-input');
+                        const textSizeControl = document.getElementById('textSizeControl');
+                        const textSize = textSizeControl.value;
+                
+                        if (textInput.value.trim() === "") {
+                            shirtPreview.querySelectorAll('.draggable-text').forEach(div => div.remove());
+                            currentDesign.text = "";
+                            return;
+                        }
+                
+                        const textDiv = document.createElement('div');
+                        textDiv.classList.add('draggable-text');
+                        textDiv.style.position = 'absolute';
+                        textDiv.style.left = currentDesign.textX + 'px';
+                        textDiv.style.top = currentDesign.textY + 'px';
+                        textDiv.style.fontSize = textSize + 'px';
+                        textDiv.style.color = textColor;
+                        textDiv.style.fontFamily = document.getElementById('font-style-dropdown').value;
+                        textDiv.style.transform = `rotate(${currentDesign.textRotation}deg)`;
+                        textDiv.textContent = textInput.value;
+                
+                        shirtPreview.querySelectorAll('.draggable-text').forEach(div => div.remove());
+                        shirtPreview.appendChild(textDiv);
+                        initTextDrag(textDiv);
+                
+                        currentDesign.text = textInput.value;
+                        currentDesign.fontSize = textSize;
+                        currentDesign.fontFamily = document.getElementById('font-style-dropdown').value;
+                        currentDesign.color = textColor;
+                    }
+                
+                    function initTextDrag(textDiv) {
+                        function startDrag(event) {
+                            isDraggingText = true;
+                            const evt = event.touches ? event.touches[0] : event;
+                            startTextX = evt.clientX - currentDesign.textX;
+                            startTextY = evt.clientY - currentDesign.textY;
+                            textDiv.style.cursor = 'grabbing';
+                            event.preventDefault();
+                        }
+                
+                        function moveDrag(event) {
+                            if (isDraggingText) {
+                                const evt = event.touches ? event.touches[0] : event;
+                                currentDesign.textX = evt.clientX - startTextX;
+                                currentDesign.textY = evt.clientY - startTextY;
+                                textDiv.style.left = currentDesign.textX + 'px';
+                                textDiv.style.top = currentDesign.textY + 'px';
+                                event.preventDefault();
+                            }
+                        }
+                
+                        function endDrag() {
+                            isDraggingText = false;
+                            textDiv.style.cursor = 'move';
+                        }
+                
+                        textDiv.onmousedown = startDrag;
+                        textDiv.ontouchstart = startDrag;
+                        document.onmousemove = moveDrag;
+                        document.ontouchmove = moveDrag;
+                        document.onmouseup = endDrag;
+                        document.ontouchend = endDrag;
+                    }
+                
+                    function selectFont(font) {
+                        updateText();
+                    }
+                
+                    function rotateText() {
+                        const rotateTextControl = document.getElementById('rotateTextControl');
+                        currentDesign.textRotation = rotateTextControl.value;
+                        updateText();
+                    }
+                
+                    function downloadFinalImage() {
+                        const shirtTemplate = document.getElementById('shirtTemplate');
+                        const canvasWidth = shirtPreview.offsetWidth;
+                        const canvasHeight = shirtPreview.offsetHeight;
+                
+                        canvas.width = canvasWidth;
+                        canvas.height = canvasHeight;
+                
+                        ctx.clearRect(0, 0, canvas.width, canvas.height);
+                        ctx.drawImage(shirtTemplate, 0, 0, canvasWidth, canvasHeight);
+                
+                        uploadedImages.forEach((img) => {
+                            const imgPos = img.getBoundingClientRect();
+                            const previewPos = shirtPreview.getBoundingClientRect();
+                
+                            const offsetX = imgPos.left - previewPos.left;
+                            const offsetY = imgPos.top - previewPos.top;
+                            const imgWidth = img.offsetWidth;
+                            const imgHeight = img.offsetHeight;
+                
+                            ctx.drawImage(img, offsetX, offsetY, imgWidth, imgHeight);
+                        });
+                
+                        shirtPreview.querySelectorAll('.draggable-text').forEach(textDiv => {
+                            const textStyle = window.getComputedStyle(textDiv);
+                
+                            const fontSize = parseInt(textStyle.fontSize);
+                            const fontFamily = textStyle.fontFamily;
+                            const color = textStyle.color;
+                
+                            ctx.font = `${fontSize}px ${fontFamily}`;
+                            ctx.fillStyle = color;
+                
+                            const textX = textDiv.offsetLeft;
+                            const textY = textDiv.offsetTop + fontSize;
+                
+                            ctx.fillText(textDiv.textContent, textX, textY);
+                        });
+                
+                        const link = document.createElement('a');
+                        link.download = 'custom_shirt_design.png';
+                        link.href = canvas.toDataURL();
+                        link.click();
+                    }
+                
+                    let textBoxCounter = 0;
+                
+                    function addTextBox() {
+                        const newTextDiv = document.createElement('div');
+                        newTextDiv.classList.add('draggable-text');
+                        newTextDiv.contentEditable = true;
+                        newTextDiv.style.position = 'absolute';
+                        newTextDiv.style.left = '50px';
+                        newTextDiv.style.top = '50px';
+                        newTextDiv.style.fontSize = '32px';
+                        newTextDiv.style.color = '#000000';
+                        newTextDiv.style.fontFamily = document.getElementById('font-style-dropdown').value;
+                        newTextDiv.style.transform = `rotate(0deg)`;
+                        newTextDiv.textContent = `Text Box ${++textBoxCounter}`;
+                
+                        shirtPreview.appendChild(newTextDiv);
+                        initTextDrag(newTextDiv);
+                    }
+                </script>
+                </h2>
             <p>This page contains information about me.</p>
         </section>
     </main>
     
     <footer>
-        <p>&copy; 2024 murimi. All rights reserved.</p>
+        <p>&copy; 2024 My Website. All rights reserved.</p>
     </footer>
 </body>
 </html>
