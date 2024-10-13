@@ -1,0 +1,54 @@
+<data inherit_id="website.layout" name="Default" active="True">
+    <xpath expr="//div[@id='footer']" position="replace">
+        <div id="footer" class="oe_structure oe_structure_solo" t-ignore="true" t-if="not no_footer">
+            <section class="s_text_block pt40 pb16" data-snippet="s_text_block" data-name="Text">
+                <div class="container">
+                    <div class="row">
+                        <div class="o_colored_level col-lg-2">
+                            <h5 class="mb-3">Useful Links</h5>
+                            <ul class="list-unstyled">
+                                <li><a href="/">Home</a></li>
+                                <li><a href="#" data-bs-original-title="" title="">Services</a></li>
+                                <li><a href="#">Legal</a></li>
+                                <li>
+                                    <a href="/privacy" data-bs-original-title="" title="">Privacy Policy</a>
+                                </li>
+                                <li><a href="/contactus" data-bs-original-title="" title="">Contact us</a><br/><br/></li>
+                            </ul>
+                        </div>
+                        <div class="o_colored_level col-lg-5">
+                            <h5 class="mb-3">&amp;nbsp; &amp;nbsp;About us</h5>
+                            <p>We are a team of passionate people whose&amp;nbsp;<br/>goal&amp;nbsp;is&amp;nbsp; to improve everyone's life through<br/>&amp;nbsp;making&amp;nbsp; travel&amp;nbsp;&amp;nbsp;experiences enjoyable&amp;nbsp;<br/>and make your dream&amp;nbsp;&amp;nbsp;vacation a reality.</p>
+                        </div>
+                        <div id="connect" class="o_colored_level col-lg-4">
+                            <h5 class="mb-3">&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;Connect with us&amp;nbsp;</h5><ul class="list-unstyled"><li>&amp;nbsp;<a href="/contactus" data-bs-original-title="" title="">Contact us</a><br/><i class="fa fa-envelope-o fa-fw me-2" contenteditable="false">​</i>&amp;nbsp;<i>​</i> &amp;nbsp; <a href="mailto:Travelbishan@gmail.com" data-bs-original-title="" title="">Travelbishan@gmail.com</a><br/><span class="o_force_ltr">&amp;nbsp;<span class="fa fa-phone" contenteditable="false">​</span>&amp;nbsp; &amp;nbsp; &amp;nbsp; <span class="o_force_ltr">&amp;nbsp;<a title="" data-bs-original-title="" href="tel://+1 (910)716-4724">+1 (910)716-4724</a>&amp;nbsp;</span><br/>&amp;nbsp;<span class="fa fa-location-arrow" contenteditable="false">​</span>&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;Nairobi, Nairobi - Kenya</span><br/><br/></li></ul><div class="s_social_media o_not_editable text-start" data-snippet="s_social_media" data-name="Social Media">
+                                <h5 class="s_social_media_title d-none">&amp;nbsp;Follow us&amp;nbsp;</h5>
+<a href="/website/social/facebook" class="s_social_media_facebook" target="_blank" aria-label="Facebook">
+                                    <i class="fa fa-facebook o_editable_media rounded-empty-circle shadow-sm" contenteditable="false">​</i>
+                                </a>
+<a href="/website/social/twitter" class="s_social_media_twitter" target="_blank" aria-label="Twitter">
+                                    <i class="fa fa-twitter o_editable_media rounded-empty-circle shadow-sm" contenteditable="false">​</i>
+                                </a>
+<a href="/website/social/linkedin" class="s_social_media_linkedin" target="_blank" aria-label="LinkedIn">
+                                    <i class="fa fa-linkedin o_editable_media rounded-empty-circle shadow-sm" contenteditable="false">​</i>
+                                </a>
+<a href="/website/social/youtube" class="s_social_media_youtube" target="_blank" aria-label="YouTube">
+                                    <i class="fa o_editable_media fa-youtube rounded-empty-circle shadow-sm" contenteditable="false">​</i>
+                                </a>
+<a href="/website/social/instagram" class="s_social_media_instagram" target="_blank" aria-label="Instagram">
+                                    <i class="fa o_editable_media fa-instagram rounded-empty-circle shadow-sm" contenteditable="false">​</i>
+                                </a>
+<a href="/website/social/tiktok" class="s_social_media_tiktok" target="_blank" aria-label="TikTok">
+                                    <i class="fa o_editable_media fa-tiktok rounded-empty-circle shadow-sm" contenteditable="false">​</i>
+                                </a>
+<a href="https://pinterest/yourpage.com" target="_blank" aria-label="pinterest" class="s_social_media_pinterest">
+                                    <i class="fa o_editable_media fa-pinterest rounded-empty-circle shadow-sm" contenteditable="false">​</i>
+                                </a>
+</div><p>&amp;nbsp;</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </xpath>
+</data>

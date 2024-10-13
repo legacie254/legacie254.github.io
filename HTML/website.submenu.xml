@@ -1,0 +1,24 @@
+<t name="Submenu" t-name="website.submenu">
+    <t t-set="show_dropdown" t-value="(submenu.is_mega_menu and submenu.is_visible) or submenu.child_id.filtered(lambda menu: menu.is_visible)"/>
+    <li t-if="submenu.is_visible and not (submenu.child_id or submenu.is_mega_menu)" t-attf-class="#{item_class or ''}" role="presentation">
+        <a t-att-href="submenu._clean_url()" t-attf-class="#{link_class or ''} #{submenu._is_active() and 'active'}" role="menuitem" t-ignore="true" t-att-target="'_blank' if submenu.new_window else None">
+            <span t-field="submenu.name"/>
+        </a>
+    </li>
+    <li t-elif="show_dropdown" t-attf-class="#{item_class or ''} dropdown #{submenu.is_mega_menu and 'position-static'}" role="presentation">
+        <a t-attf-class="#{link_class or ''} dropdown-toggle #{submenu.is_mega_menu and 'o_mega_menu_toggle'} #{submenu._is_active() and 'active'} #{dropdown_toggler_classes}" data-bs-toggle="dropdown" href="#" t-att-data-bs-display="'static' if submenu.is_mega_menu else None" role="menuitem">
+            <span t-field="submenu.name"/>
+        </a>
+        <t t-if="submenu.is_mega_menu">
+            <div t-if="not is_mobile" t-attf-class="dropdown-menu o_mega_menu #{submenu.mega_menu_classes}" data-name="Mega Menu" t-field="submenu.mega_menu_content" role="menuitem"/>
+        </t>
+        <ul t-else="" t-attf-class="dropdown-menu #{dropdown_menu_classes}" role="menu">
+            <t t-foreach="submenu.child_id" t-as="submenu">
+                <t t-call="website.submenu">
+                    <t t-set="item_class" t-value="None"/>
+                    <t t-set="link_class" t-valuef="dropdown-item"/>
+                </t>
+            </t>
+        </ul>
+    </li>
+</t>

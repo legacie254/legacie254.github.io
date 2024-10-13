@@ -1,0 +1,9 @@
+<data inherit_id="website.layout" active="False">
+    <xpath expr="//div[@id='footer']" position="after">
+        <div id="o_footer_scrolltop_wrapper" class="container h-0 d-flex align-items-center justify-content-center">
+            <a id="o_footer_scrolltop" role="button" href="#top" title="Scroll To Top" class="btn btn-primary rounded-circle d-flex align-items-center justify-content-center">
+                <span class="oi fa-1x oi-chevron-up" contenteditable="false">​</span>
+            </a>
+        </div>
+    </xpath>
+</data>

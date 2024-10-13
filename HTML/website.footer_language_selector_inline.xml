@@ -1,0 +1,5 @@
+<data name="Footer Language Selector Inline" inherit_id="portal.footer_language_selector" active="True">
+    <xpath expr="//t[@id='language_selector_call']" position="replace">
+        <t id="language_selector_call" t-call="website.language_selector_inline"/>
+    </xpath>
+</data>

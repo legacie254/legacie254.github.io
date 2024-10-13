@@ -1,0 +1,23 @@
+<t t-name="portal.portal_my_details">
+        <t t-call="portal.portal_layout">
+            <t t-set="additional_title">Contact Details</t>
+            <form action="/my/account" method="post">
+                <div class="row o_portal_details">
+                    <div class="col-lg-8">
+                        <div class="row">
+                            <t t-call="portal.portal_my_details_fields"/>
+                            <input type="hidden" name="redirect" t-att-value="redirect"/>
+                        </div>
+                        <div class="clearfix text-end mb-5">
+                            <a href="/my/" class="btn btn-secondary me-2">
+                                Discard
+                            </a>
+                            <button type="submit" class="btn btn-primary float-end">
+                                Save
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </t>
+    </t>
