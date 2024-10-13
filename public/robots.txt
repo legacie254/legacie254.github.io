@@ -1,0 +1,16 @@
+# Allow all robots to access the entire site
+User-agent: *
+Disallow:
+
+# Disallow crawling of specific directories
+Disallow: /node_modules/
+Disallow: /src/
+Disallow: /public/
+
+# Disallow specific files
+Disallow: /package.json
+Disallow: /package-lock.json
+Disallow: /yarn.lock
+
+# Sitemap location (if you have a sitemap)
+# Sitemap: https://github.com/Ianeyan/bishan-travel-agency.git.xml

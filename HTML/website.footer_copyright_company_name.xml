@@ -1,5 +1,0 @@
-<data inherit_id="website.layout">
-    <xpath expr="//footer//span[hasclass('o_footer_copyright_name')]" position="replace">
-        <span class="o_footer_copyright_name me-2">&amp;nbsp; &amp;nbsp; &amp;nbsp;Copyright ©2024Travel Bishan Agency. All Rights Reserved&amp;nbsp;</span>
-    </xpath>
-</data>
