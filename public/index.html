@@ -17,18 +17,44 @@
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-  <!--placeholder for components-->
-  <div id="login.js"></div>
-  <div id="travelpackages.js"></div>
-  <div id="header.js"></div>
-  <div id="herosection.js"></div>
+  import React from 'react';
 
-  <div id="root"></div>
+  const travelPackages = [
+    {
+      id: 1,
+      title: 'Exotic Destinations',
+      description: 'Explore the most exotic places in the world.',
+      price: '$2000'
+    },
+    {
+      id: 2,
+      title: 'Cultural Experiences',
+      description: 'Immerse yourself in rich cultural experiences.',
+      price: '$1500'
+    },
+    {
+      id: 3,
+      title: 'Relaxing Retreats',
+      description: 'Relax and rejuvenate in serene locations.',
+      price: '$1800'
+    }
+  ];
   
-  <!-- Placeholder for the footer -->
-  <div id="footer.js"></div>
-
-  <!-- Main JavaScript Bundle -->
-  <script src="src/index.js"></script>
+  function TravelPackages() {
+    return (
+      <div className="travel-packages">
+        {travelPackages.map(package.=> (
+          <div key={package.id} className="package">
+            <h3>{package.title}</h3>
+            <p>{package.description}</p>
+            <p><strong>{package.price}</strong></p>
+          </div>
+        ))}
+      </div>
+    );
+  }
+  
+  export default TravelPackages;
+  
 </body>
 </html>
